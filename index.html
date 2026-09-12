@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b3d5c">
+  <meta name="description" content="เกมแบบทดสอบหลังเรียน เรื่องปัจจัยที่มีผลต่ออัตราการเกิดปฏิกิริยาเคมี ชั้นมัธยมศึกษาปีที่ 5">
+  <title>CHEM RATE QUEST | แบบทดสอบอัตราการเกิดปฏิกิริยาเคมี</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <main class="app-shell">
+    <header class="brand-bar">
+      <div class="brand-mark" aria-hidden="true">⚗️</div>
+      <div>
+        <p class="eyebrow">PHOSI SAWANG WITTAYA SCHOOL</p>
+        <h1>CHEM RATE QUEST</h1>
+      </div>
+      <button id="soundBtn" class="icon-btn" type="button" aria-label="เปิดหรือปิดเสียง" title="เปิด/ปิดเสียง">🔊</button>
+    </header>
+
+    <section id="startScreen" class="screen active">
+      <div class="hero-card">
+        <div class="hero-copy">
+          <span class="pill">POST-TEST • เคมี ม.5</span>
+          <h2>ภารกิจพิชิต<br><span>อัตราการเกิดปฏิกิริยา</span></h2>
+          <p>ตอบคำถาม 20 ข้อให้ครบ รักษาหัวใจไว้ และใช้คำใบ้เมื่อต้องการทบทวนแนวคิด</p>
+          <div class="mission-stats">
+            <div><strong>20</strong><span>คำถาม</span></div>
+            <div><strong>4</strong><span>หัวข้อ</span></div>
+            <div><strong>60%</strong><span>เกณฑ์ผ่าน</span></div>
+          </div>
+        </div>
+
+        <form id="startForm" class="start-form">
+          <h3>ข้อมูลผู้เข้าสู่ภารกิจ</h3>
+          <label>ชื่อ–สกุล
+            <input id="studentName" name="studentName" autocomplete="name" maxlength="60" required placeholder="กรอกชื่อและนามสกุล">
+          </label>
+          <div class="form-grid">
+            <label>ชั้น
+              <input id="studentClass" name="studentClass" maxlength="12" required value="ม.5/">
+            </label>
+            <label>เลขที่
+              <input id="studentNumber" name="studentNumber" inputmode="numeric" maxlength="3" required placeholder="เช่น 7">
+            </label>
+          </div>
+
+          <fieldset class="life-select">
+            <legend>เลือกจำนวนหัวใจ</legend>
+            <label class="life-option">
+              <input type="radio" name="lives" value="4" checked>
+              <span><b>❤️❤️❤️❤️</b><small>โหมดปกติ</small></span>
+            </label>
+            <label class="life-option">
+              <input type="radio" name="lives" value="3">
+              <span><b>❤️❤️❤️</b><small>โหมดท้าทาย</small></span>
+            </label>
+          </fieldset>
+
+          <div class="rule-box">
+            <b>กติกา</b>
+            <p>ตอบผิดหัวใจลด 1 ดวง หากหัวใจหมดต้องเริ่มใหม่ตั้งแต่ข้อ 1 คำใบ้เปิดได้ทุกข้อและระบบจะบันทึกจำนวนครั้งที่ใช้</p>
+          </div>
+          <button class="primary-btn" type="submit">เริ่มภารกิจ <span>→</span></button>
+        </form>
+      </div>
+      <p class="credit">พัฒนาโดย คุณครูสุพักตร์ศิริ พืชสิงห์ • โรงเรียนโพธิ์ศรีสว่างวิทยา</p>
+    </section>
+
+    <section id="quizScreen" class="screen">
+      <div class="status-card">
+        <div class="player-info">
+          <span class="avatar">🧑‍🔬</span>
+          <div><small>ผู้เข้าสู่ภารกิจ</small><strong id="playerName"></strong></div>
+        </div>
+        <div class="status-right">
+          <div id="heartDisplay" class="hearts" aria-label="หัวใจคงเหลือ"></div>
+          <span id="scoreDisplay" class="score-chip">คะแนน 0</span>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span id="categoryLabel">หัวข้อ</span>
+          <span id="questionCounter">ข้อ 1/20</span>
+        </div>
+        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+      </div>
+
+      <article class="question-card">
+        <div class="question-topline">
+          <span id="questionBadge" class="question-badge">QUESTION 01</span>
+          <span id="hintCount" class="hint-count">ใช้คำใบ้ 0 ครั้ง</span>
+        </div>
+        <h2 id="questionText"></h2>
+        <div id="visualArea" class="visual-area" hidden></div>
+        <div id="options" class="options" role="radiogroup" aria-label="ตัวเลือกคำตอบ"></div>
+
+        <div class="question-actions">
+          <button id="hintBtn" class="hint-btn" type="button">💡 เปิดคำใบ้</button>
+          <button id="submitBtn" class="primary-btn compact" type="button" disabled>ยืนยันคำตอบ</button>
+        </div>
+        <div id="hintBox" class="hint-box" hidden>
+          <b>💡 คำใบ้</b>
+          <p id="hintText"></p>
+        </div>
+        <div id="feedbackBox" class="feedback-box" hidden aria-live="polite">
+          <b id="feedbackTitle"></b>
+          <p id="feedbackText"></p>
+          <button id="nextBtn" class="primary-btn compact" type="button">ข้อต่อไป →</button>
+        </div>
+      </article>
+    </section>
+
+    <section id="gameOverScreen" class="screen">
+      <div class="end-card game-over-card">
+        <div class="end-icon">💔</div>
+        <span class="pill danger">MISSION ENDED</span>
+        <h2>หัวใจหมดแล้ว</h2>
+        <p>ไม่เป็นไร นักวิทยาศาสตร์เรียนรู้จากการทดลองเสมอ ทบทวนคำอธิบายแล้วเริ่มภารกิจใหม่ตั้งแต่ข้อ 1</p>
+        <div id="gameOverStats" class="mini-result"></div>
+        <button id="restartBtn" class="primary-btn" type="button">เริ่มใหม่ตั้งแต่ข้อ 1 ↻</button>
+      </div>
+    </section>
+
+    <section id="resultScreen" class="screen">
+      <div id="captureCard" class="result-card">
+        <div class="result-heading">
+          <div id="resultIcon" class="end-icon">🏆</div>
+          <div>
+            <span class="pill">MISSION COMPLETE</span>
+            <h2 id="resultTitle">สรุปผลการทดสอบ</h2>
+            <p>เรื่อง ปัจจัยที่มีผลต่ออัตราการเกิดปฏิกิริยาเคมี</p>
+          </div>
+        </div>
+
+        <div class="student-summary">
+          <div><small>ชื่อ–สกุล</small><strong id="resultName"></strong></div>
+          <div><small>ชั้น / เลขที่</small><strong id="resultRoom"></strong></div>
+          <div><small>วันที่–เวลา</small><strong id="resultDate"></strong></div>
+        </div>
+
+        <div class="score-hero">
+          <div class="score-ring" id="scoreRing"><span id="finalScore">0</span><small>/ 20</small></div>
+          <div class="score-copy">
+            <span id="passBadge" class="pass-badge">ผ่านเกณฑ์</span>
+            <h3 id="percentScore">0%</h3>
+            <p id="resultMessage"></p>
+          </div>
+        </div>
+
+        <div id="categoryResults" class="category-results"></div>
+
+        <div class="result-foot">
+          <span>🧾 ตอบแล้ว <b id="answeredCount"></b> ข้อ</span>
+          <span>❤️ หัวใจคงเหลือ <b id="remainingLives"></b></span>
+          <span>💡 ใช้คำใบ้ <b id="totalHints"></b> ครั้ง</span>
+        </div>
+        <p class="result-credit">พัฒนาโดย คุณครูสุพักตร์ศิริ พืชสิงห์ • โรงเรียนโพธิ์ศรีสว่างวิทยา</p>
+      </div>
+
+      <div class="result-actions no-print">
+        <button id="printBtn" class="secondary-btn" type="button">📸 บันทึก/พิมพ์ผล</button>
+        <button id="playAgainBtn" class="primary-btn" type="button">เริ่มใหม่ตั้งแต่ข้อ 1 ↻</button>
+      </div>
+      <p class="capture-note no-print">นักเรียนสามารถแคปหน้าจอนี้ หรือกด “บันทึก/พิมพ์ผล” แล้วเลือกบันทึกเป็น PDF เพื่อส่งครู</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
